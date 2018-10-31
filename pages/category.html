@@ -1,0 +1,274 @@
+<div class="category">
+    <div style="padding-left: 15px">
+        <button class="btn btn-success cateadd">新 增</button>
+        <button class="btn btn-success delet">批量删除</button>
+    </div>
+    <div class="modal" id="categoryModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="backDiv">
+                        <i class="glyphicon glyphicon-menu-left"></i>
+                        <span>返回</span>
+                    </div>
+                    <div class="modal-tiltle text-center">添加栏目</div>
+                </div>
+                <div class="modal-body">
+                   <form>
+                        <div class="form-group">
+                        <label>栏目名称：</label>
+                        <input type="text" name="name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>父栏目：</label>
+                            <button class="btn btn-default dropdown-toggle form-control farentnames"  data-toggle='dropdown' style="position: relative;"><span class="caret" style="float: right;"></span></button>
+                            <ul class="dropdown-menu parentList" style="position: absolute;top: 152px;left: 13px">
+                            </ul>
+                        </div>
+                        <div class="form-group">
+                        <label>描述：</label>
+                        <textarea type="text" name="comment" class="form-control" cols="30" rows="5"></textarea>
+                        </div>
+                         <div class="form-group">
+                            <button type="reset" name="" class="hidden"></button>
+                        </div>
+                        
+                   </form>
+                </div>
+                 <div class="modal-footer">
+                        <div class="form-group">
+                            <span class="msg"></span>
+                            <button class="btn btn-success saveBtn">确认</button>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row cateTable">
+       <div class="col-sm-1">编号</div>
+       <div class="col-sm-2">栏目名称</div>
+       <div class="col-sm-2">父栏目</div>
+       <div class="col-sm-6">描述</div>
+       <div class="col-sm-1">操作</div>
+    </div>
+    <div class="cateTabletd">
+        
+    </div>
+</div>
+<style type="text/css">
+    #categoryModal .backDiv{
+        cursor: pointer;
+        float: left;
+    }
+    #categoryModal{
+        background-color: rgba(0,0,0,0.4);
+    }
+    #categoryModal .modal-dialog{
+        margin-top: 0px;
+        margin-right: 0px;
+        width: 400px;
+        font-size: 20px;
+    }
+    .cateTable,.cateTabletds{
+        margin-left: 15px;
+        margin-right: 15px;
+        text-align: center;
+        height: 30px;
+        line-height: 30px;
+    }
+    .cateTable{
+        margin-top: 10px;
+    }
+    .cateTabletd{
+        padding-bottom: 20px;
+    }
+    .cateTable div,.cateTabletds div{
+        border: solid 1px #ededed;
+        
+
+
+    }
+
+</style>
+<script type="text/javascript">
+$(function(){
+     Id=null;
+     $('.category').on({
+        click:function(){
+            $('.msg').html('');
+            Id = $(this).parent().parent().find('span').text();
+            var name = $(this).parent().parent().find('div:eq(1)').text();
+            var parent = $(this).parent().parent().find('div:eq(2)').text();
+            var comment = $(this).parent().parent().find('div:eq(3)').text();
+            console.log(name,parent,comment)
+            $('#categoryModal').show();
+            $('input[name=name]').val(value=name);
+            if(parent=='***'){
+            $('.farentnames').html('请选择');
+            }else{
+                $('.farentnames').html(parent+'请重新选择');
+            }
+            // $('textarea[name=comment]').html('');
+            $('textarea[name=comment]').val(comment);
+
+        }
+     },"[title='修改']");
+     $('.category').on({
+        click:function(){
+            var id = $(this).parent().parent().find('span').text();
+            var obj={
+                id:id,
+            };
+            $.get(baseUrl+'/manager/category/deleteCategoryById',obj,function(res){
+                 if(res.status==200){
+                        console.log(res)
+                        // alert('删除成功')
+                        loadData();
+                }else{
+                    alert(res.status+" "+'删除失败')
+                }
+            });
+
+        }
+    },"[title='删除']");
+
+     ids = ''
+     // 批量删除
+    $('.delet').click(function(){
+        ids = []
+        var inputList = $(".cateTabletd input+");
+        var inputLists = $('.cateTabletd input')
+        var inputLists = Array.prototype.slice.call(inputLists,0);
+        inputLists.forEach(function(item,index){
+            if(item.checked==true){
+                var idd = inputList[index].innerHTML;
+                ids.push(idd)
+            }
+            
+        });
+        ids = ids.toString()
+        console.log(ids);
+        var objs = {
+            ids:ids,
+        };
+
+        $.post(baseUrl+'/manager/category/batchDeleteCategory',objs,function(res){
+                if(res.status==200){
+                    console.log(res)
+                    alert('删除成功')
+                     loadData();
+                }else{
+                    alert(res.status+" "+'删除失败');
+                    loadData();
+                }
+               
+        })
+         
+    })
+   
+    $('#categoryModal .modal-content').height($(window).height());
+    $('.cateadd').on({
+        click:function(){
+            $('.msg').html('');
+            $('button[type=reset]').trigger('click');
+            $('textarea[name=comment]').html('');
+            $('#categoryModal').show();
+
+        }
+    });
+    $('.backDiv').click(function(){
+        $('#categoryModal').hide();
+    })
+    $('.saveBtn').on({
+        click:function(){
+            var msg='成功添加';
+            var name = $('input[name=name]').val();
+            var parentname = $('.farentnames').text();
+            var comment = $('textarea[name=comment]').val();
+            if(name&&parentname&&comment){
+                msg='添加成功';
+                var obj = {
+                    id:Id,
+                    name:name,
+                    comment:comment,
+                    parentId:parentId,
+                    no:null
+                };
+            $.post(baseUrl+'/manager/category/saveOrUpdateCategory',obj,function(res){
+                if(res.status='201'){
+                    console.log(res)
+                    $('#categoryModal').hide();
+                    loadData();
+                }else{msg='添加失败'}
+               
+            })
+            return;
+        }else{msg='请检查输入';}
+        $('.msg').html(msg);
+
+    }
+    });
+    parentId=0;
+   
+    loadData();
+
+    function loadData(){
+        $.get(baseUrl+'/manager/category/findAllCategory',{},function(res){
+            $('.cateTabletd').empty();
+            $('.parentList').empty()
+            
+            arr=[];
+            var newarr=[];
+            var parentids=[]
+            console.log(res);
+            res.data.forEach(function(item,index){
+                var td=$(`<div class="row cateTabletds">
+                   <div class="col-sm-1"><input type="checkbox"><span style="display:none">`+item.id+`</span></div>
+                   <div class="col-sm-2">`+item.name+`</div>
+                   <div class="col-sm-2">`+(item.parent?item.parent.name:"***")+`</div>
+                   <div class="col-sm-6">`+item.comment+`</div>
+                   <div class="col-sm-1 Icon"><i class="iconfont icon-xiugai" style="color:blue;margin-right:20px;cursor:pointer" title="修改"></i><i class="iconfont icon-shanchu" style="color:red;margin-right:20px;cursor:pointer" title='删除'></i></div></div>`);
+                $('.cateTabletd').append(td);
+              
+                if(item.parent){
+                    function employee(name,parentid)
+                        {
+                        this.name=name;
+                        this.parentid=parentid;
+                        }
+
+                        var bill=new employee(item.parent.name,item.parent.id);
+                        arr.push(bill);
+                }
+            });
+               
+               for(var x=0;x<arr.length;x++){
+                    var items = arr[x].name;
+                    if($.inArray(items,newarr)==-1){
+                        newarr.push(items);
+                    }
+               };
+               for(var i=0;i<newarr.length;i++){
+                    var parentNameList = $(`<li><a>`+newarr[i]+`</a></li>`);
+                    $('.parentList').append(parentNameList);
+                     $('.parentList li a').on({
+                        click:function(){
+                            $('.farentnames').html($(this).text()).css('font-size','18px');
+                            for(var x=0;x<arr.length;x++){
+                                if($(this).text()==arr[x].name){
+                                    parentId = arr[x].parentid;
+                                    return;
+                                }
+                            }
+                        }
+                    })
+               };
+
+
+        });
+    }
+   
+})
+    
+</script>

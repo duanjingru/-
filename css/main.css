@@ -1,0 +1,90 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-size: 16px;
+    font-family: '宋体';
+    color: gray;
+    font-weight: bolder;
+}
+.leftDiv{
+    width: 17%;
+    background-color: #282830;
+    color: white;
+    display: inline-block;
+}
+.topLeft{
+    height: 50px;
+    line-height: 50px;
+    background-color: #3d556d;
+    font-size: 20px;
+    font-family: '微软雅黑';
+}
+.contentLeft{
+    margin-top: 20px;
+    padding-right: 10px;
+    font-size: 18px;
+}
+.contentLeft li{
+    line-height: 30px;
+    padding: 10px;
+    border-bottom: solid 2px #2e2e32;
+    cursor: pointer;
+}
+.contentLeft i:first-child{
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+.contentLeft i:last-child{
+    float: right;
+    font-size: 20px;
+    margin-right: 10px;
+}
+.rightDiv{
+    /*display: inline-block;*/
+    width: 83%;
+    float: right;
+    background-color: #f0f0f0;
+}
+.topRight{
+    display: inline-block;
+    font-size: 18px;
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    background-color: white;
+}
+.topRight .noticeDiv i{
+    font-size: 24px;
+    margin-right: 10px;
+    margin-left: 20px;
+
+}
+.notice{
+    position: relative;
+}
+.noticeNumb{
+    position: absolute;
+    right: 0;
+    top: 5px;
+    background-color: red;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    line-height: 18px;
+}
+.topRight div{
+    display: inline-block;
+}
+.infoDiv{
+    float: right;
+    padding-right: 100px;
+}
+.contentRight{
+    margin: 15px;
+    padding: 15px;
+    background-color: white;
+    overflow: auto;
+}

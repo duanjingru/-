@@ -1,0 +1,394 @@
+<div id="home">
+    <div class="left">
+        <div class="leftone">
+            <div class="leftone_left">
+                <div class="icon_1"><i class="iconfont icon-yun"></i></div>
+            </div>
+            <div class="leftone_right">
+                <h3>99.9 %</h3>
+                <h5>SERVER UPTIME</h5>
+            </div>
+        </div>
+        <div class="lefttwo">
+            <div class="leftone_left">
+                <div class="icon_2"><i class="iconfont icon-yonghuicon"></i></div>
+            </div>
+            <div class="leftone_right">
+                <h3>117 K</h3>
+                <h5>USERS TOTAL</h5>
+            </div>
+
+        </div>
+        <div class="leftthree">
+            <div class="leftone_left">
+                <div class="icon_3"><i class="iconfont icon-paizhao"></i></div>
+            </div>
+            <div class="leftone_right">
+                <h3>2,470</h3>
+                <h5>NEW DAILY PHOTOS</h5>
+            </div>
+
+        </div>
+    </div>
+    <div class="center">
+        <div id="container" style="width: 100%;height:100%">
+        </div>
+        <div class="con1">
+            <h2>14.85%</h2>
+            <h5>More Visitors</h5>
+        </div>
+    </div>
+    <div class="right">
+        <div class="rightone">
+            <div id="right_container" style="width: 100%;height: 100%"></div>
+             <div class="con2">
+                <h2>95.8%</h2>
+                <h5>CURRENT SERVER UPTIME</h5>
+            </div>
+        </div>
+        <div class="righttwo">
+            <div id="three" style="width: 100%;height: 100%"></div>
+             <div class="con3">
+                <h2>320,45</h2>
+                <h5>AVG OF SALES</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+   #home{
+    width: 100%;
+    margin: 0px auto;
+   }
+    .leftone_left{
+        height: 120px;
+        width: 30%;
+        float: left;
+        position: absolute;
+    }
+    .icon_1,.icon_2,.icon_3{
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        position: relative;
+        left: 5px;
+        top:30px;
+    }
+    .leftone_left i{
+        color: #ffffff;
+        font-size: 20px;
+    }
+    .icon_1{
+        background-color: green;
+    }
+    .icon_2{
+        background-color: #7c31bf;
+    }
+    .icon_3{
+        background-color: #38b9ec;
+    }
+    .leftone_right{
+        width: 65%;
+        float: right;
+        height: 100%;
+        margin-top: 10px;
+        font-weight: bolder;
+        font-family: '微软雅黑';
+        color: #3f3f3f;
+    }
+    .contentRight{
+    background-color: #f0f0f0;
+    }
+    .left,.center,.right{
+        padding:10px;
+        height: 400px;
+    }
+   
+    .left .leftone,.lefttwo,.leftthree{
+        background-color: #ffffff;
+        height: 30%;
+    }
+    .left .leftone,.lefttwo{
+        margin-bottom: 20px;
+    }
+    .left{
+        width: 20%;
+        float: left;
+    }
+    .center{
+        width:55%;
+        float: left;
+    }
+    .con1{
+        position: relative;
+        top:-380px;
+        left: 30px;
+        z-index: 200;
+    }
+    .con1 h2{
+        font-weight: bolder;
+        color: green;
+    }
+
+    .right{
+        width: 25%;
+        float: right;
+    }
+    .right .rightone,.righttwo{
+        height: 47%;
+        background-color: #ffffff;
+    }
+    .right .rightone{
+        margin-bottom: 25px;
+        /*position: absolute;*/
+    }
+    .con2{
+        position: relative;
+        z-index:200;
+        top:-180px;
+        left: 20px;
+        border-color: rgba(0,0,0,0); 
+    }
+    .con2 h2{
+        color: #7a2fbe;
+    }
+    .con3{
+        position: relative;
+        z-index: 200;
+        top:-150px;
+        left: 20px;
+    }
+    .con3 h2{
+        color: green;
+        font-weight: 900;
+    }
+</style>
+<script type="text/javascript">
+   $(function(){
+    one()
+    two()
+    three()
+    function one(){
+        var chart = Highcharts.chart('container',{
+            // 边距
+            chart:{
+                margin:[0,0,0,0],
+            },
+            // 颜色
+            colors:['pink','#99ffff'],
+            title:{
+                text:''
+            },
+            // 版权信息
+            credits:{
+                enabled:false
+            },
+            // 坐标轴隐藏
+            xAxis:{
+                gridLineWidth:1,
+                visiable:false,
+            },
+            yAxis:{
+                visiable:false,
+            },  
+            // 图例
+            legend:{
+                floating:true,
+                // 垂直布局
+                layout:'vertical',
+                align:'right',
+                verticalAlign:'top'
+            },
+            plotOptions:{
+                series:{
+                    // 数据起点
+                    pointStart:2010
+                }
+            },
+            series:[{   
+                name:'PageViews',
+                data:[43934, 42503, 47177, 49658, 47031, 49931, 47133, 44175,43934, 42503, 47177, 49658, 47031, 49931, 47133, 44175]
+            },{
+                name:'Visitors',
+                data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434,44916, 44064, 39742, 39851, 32490, 30282, 38121, 40434]
+            }]
+
+        });
+    }
+    function two(){
+        var chart = Highcharts.chart('right_container',{
+           chart: {
+                    type: 'column',
+                    spacingBottom:0,
+                    margin:[0,0,0,0],
+                },
+            // colors:['#7a2fbe'],
+            credits:{
+                enabled:false
+            },
+            title:{
+                text:''
+            },
+            xAxis: {
+                visiable:false,
+                gridLineColor:'red'
+            },
+            yAxis:{
+                visiable:false,
+                gridLineColor:'#ffffff'
+            },  
+            legend:{
+                enabled:false
+            },
+            // 数据列配置
+           plotOptions: {
+                    column: {
+                        // 边框宽度
+                        borderWidth: 0,
+                        // 数据标签
+                        // dataLabels: {
+                        //     // enabled: true,
+                        //     // 格式化字符串
+                        //     format: '{point.y:.1f}%'
+                        // }
+                    }
+                },
+                // 提示框
+            tooltip: {
+                // 头部
+                headerFormat: '<span style="font-size:18px">{series.name}</span><br>',
+                // 尾部
+                pointFormat: '<span style="color:{point.color}">{point.key}</span>: <b>{point.y:.2f}%</b> of total<br/>',
+                useHTML:true
+            },
+            // 数据
+            series: [{
+                color:'#7a2fbe',
+                groupPadding:0.0005,
+                name:'xiao',
+                // colorByPoint:true,
+                data: [29.9, 71.5,323,223,322,32,232, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4,332,233,432.2]
+            }]
+        })
+    }
+
+    function three(){
+        // var chart = Highcharts.chart('three',{
+        //     credits:{
+        //         enabled:false
+        //     },
+        //     chart:{
+        //         margin:[0,0,0,120],
+        //         // type:'pie',
+        //     },
+        //     title:{
+        //         text:''
+        //     },
+        //     tooltip: {
+        //             headerFormat:'<span>{point.key}</span><br>',
+        //             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+        //             useHTML:true
+        //         },
+        //     plotOptions: {
+        //         pie: {
+        //             // 允许选择
+        //             allowPointSelect: true,
+        //             cursor: 'pointer',
+        //             dataLabels: {
+        //                 enabled: false,
+        //                 // format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+        //             },
+        //         }
+        //     },
+        //     series:[{
+        //         type:'pie',
+        //         // 饼的内径的大小
+        //         innerSize:'50%',
+        //         name:'pie',
+        //         data:[
+        //         ['Firefox',45.0],
+        //                 ['IE',26.8],
+        //                 ['Chrome',12.8],
+        //                 ['Safari',8.5],
+        //                 ['Opera',6.2],
+        //                 ['其他',0.7]]
+        //     }]
+        // })
+        var  chart = Highcharts.chart('three', {
+            credits:{
+                enabled:false
+            },
+            chart: {
+                margin:[0,0,0,120],
+
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            colors:['#5c9c49','#9cdc87','#b5f5a4','#8ece7b','#b7f5a4','#387823','#81c56f'],
+            title: {
+                text: ''
+            },
+            tooltip: {
+                headerFormat: '{series.name}<br>',
+                pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    },
+                    states: {
+                        hover: {
+                            enabled: false
+                        }  
+                    },
+                    slicedOffset: 20,         // 突出间距
+                    point: {                  // 每个扇区是数据点对象，所以事件应该写在 point 下面
+                        events: {
+                            // 鼠标滑过是，突出当前扇区
+                            mouseOver: function() {
+                                this.slice();
+                            },
+                            // 鼠标移出时，收回突出显示
+                            mouseOut: function() {
+                                this.slice();
+                            },
+                            // 默认是点击突出，这里屏蔽掉
+                            click: function() {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                innerSize:'50%',
+                name: '浏览器访问量占比',
+                data: [
+                    ['Firefox',   45.0],
+                    ['IE',       26.8],
+                    {
+                        name: 'Chrome',
+                        y: 12.8,
+                        sliced: false, // 突出显示这个点（扇区），用于强调。
+                    },
+                    ['Safari',    8.5],
+                    ['Opera',     6.2],
+                    ['其他',   0.7]
+                ]
+            }]
+        });
+    }
+   })
+</script>

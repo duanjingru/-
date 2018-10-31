@@ -1,0 +1,276 @@
+<div id="info">
+    <select name="optionDiv" style='overflow: hidden;width: 150px;height: 34px;text-align: center;'></select>
+    <button class="btn btn-success addBtn">新 增</button>
+    <button class="btn btn-success batchDelBtn">批量删除</button>
+    <table class="table table-bordered text-center">
+        <tr>
+            <td>编号</td>
+            <td>文档标题</td>
+            <td>所属栏目</td>
+            <td>排列方式</td>
+            <td>内容</td>
+            <td>发布时间</td>
+            <td>阅读次数</td>
+            <td>操作</td>
+        </tr>
+       <!--  <tr>
+            <td><input type="checkbox" name=""></i></td>
+            <td>文档标题</td>
+            <td>所属栏目</td>
+            <td>背景音乐</td>
+            <td>作者</td>
+            <td>发布时间</td>
+            <td>阅读次数</td>
+            <td><i class="iconfont icon-xiugai" title="修改" style="color: blue;padding-right: 15px"></i><i class="iconfont icon-shanchu shanchu" style="color: red;padding-right: 15px"></i></td>
+
+        </tr> -->
+    </table>
+    <div class="modal" id="infoModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="backDiv">
+                        <i class="glyphicon glyphicon-menu-left"></i>
+                        <span>返回</span>
+                    </div>
+                    <div class="modal-tiltle text-center">发布资讯</div>
+                </div>
+                <div class="modal-body">
+                   <form>
+                        <div class="form-group">
+                        <label>标题：</label>
+                        <input type="text" name="name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>所属栏目：</label>
+                            <select name="optionDiv" class="cateName" style='overflow: hidden;width: 150px;height: 34px;text-align: center;'></select><span class="zhushi" style="padding-left: 20px;color: red" ></span>
+                        </div>
+                        <div class="form-group">
+                            <label>列表样式：</label>
+                            <div class="radio">
+                                <label for="style-one" style='padding-right: 80px'>
+                                    <input type="radio" name="infoList" value="style-one" id="style-one">
+                                    <img src="./images/style-one.jpg" width="200px" height="150px" alt="">
+                                </label>
+                                <label for="style-two">
+                                    <input type="radio" name="infoList" value="style-two" id="style-two">
+                                    <img src="./images/style-two.jpg" width="200px" height="150px" alt="">
+                                </label>
+                            </div>
+                            <label>正文:</label>
+                            <div>
+                                <textarea name="infoContent" id="" cols="30" rows="6" class="form-control"></textarea>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <button type="reset" name="" class="hidden">重置</button>
+                        </div>
+                   </form>
+                </div>
+                 <div class="modal-footer">
+                        <div class="form-group">
+                            <span class="msg" style="color: red"></span>
+                            <button class="btn btn-success saveBtn">发布</button>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<style type="text/css">
+    #info table{
+        margin-top: 10px;
+    }
+    #infoModal .backDiv{
+        cursor: pointer;
+        float: left;
+    }
+    #infoModal{
+        background-color: rgba(0,0,0,0.4);
+    }
+    #infoModal .modal-dialog{
+        margin-top: 0px;
+        margin-right: 0px;
+        width: 600px;
+        font-size: 20px;
+    }
+</style>
+<script type="text/javascript">
+    $(function(){
+        categoryid = '';
+        articles=[];
+        zhushi = '';
+        msg='';
+        infoid=null;
+        $('#infoModal .modal-content').height($(window).height());
+        option();
+        loadData();
+        //修改
+        $('#info').on({
+            click:function(){
+                $('button[type=reset]').trigger('click');
+
+                infoid = $(this).closest('tr').find('input').val();
+                article = articles.filter(function(item,index){
+                    return item.id == infoid;
+                })[0];
+                $('input[name=name]').val(article.title);
+                $('textarea[name=infoContent]').val(article.content);
+                $('input[name=infoList]').prop('checked',false);
+                $('input[value='+article.liststyle+']').prop('checked',true);
+                addoption(categoryid);
+
+
+            }
+        },"[title='修改']");
+        // 删除
+        $('#info').on({
+            click:function(){
+                var id = $(this).closest('tr').find('input').val();
+                var obj={
+                    id:id,
+                }
+                $.get(baseUrl+'/manager/article/deleteArticleById',obj,function(res){
+                    if(res.status==200){
+                        loadData(categoryid);
+                        alert('删除成功')}
+                        else{alert('删除失败'+res.message)}
+                })
+            }
+        },"[title='删除']")
+        // 批量删除
+        $('.batchDelBtn').click(function(){
+            var ids = $('input[type=checkbox]:checked').map(function(index,item){
+                return $(item).val()
+            }).toArray().join();
+            var obj = {ids:ids};
+            $.post(baseUrl+'/manager/article/batchDeleteArticle',obj,function(res){
+                if(res.status==200){
+
+                    loadData(categoryid);
+                    alert('删除成功')
+            }else{alert('删除失败')}
+
+            })
+        })
+        // 新增
+        $('.addBtn').click(function(){
+            infoid = null;
+            $('button[type=reset]').trigger('click');
+            addoption(categoryid);
+        });
+        $('.backDiv').click(function(){
+            $('#infoModal').hide();})
+        // 模态框中的值为选中的值
+        function addoption(optionid){
+                $('select[name=optionDiv]').val(optionid);
+                $('#infoModal').show();
+        }
+        $('.saveBtn').click(function(){
+            var title = $('input[name=name]').val();
+            var categoryId = $('.cateName').val();
+            var infoList = $('input[name=infoList]:checked').val();
+            var content = $('textarea[name=infoContent]').val();
+            var publishtime = parseDate();
+            var readtimes = parseInt(Math.random()*100);
+            console.log(publishtime);
+            if(title&&categoryId&&infoList&&content){
+                msg='';
+                var obj={
+                    id:infoid,
+                    content:content,
+                    title:title,
+                    liststyle:infoList,
+                    categoryId:categoryId,
+                    publishtime:publishtime,
+                    readtimes:readtimes
+                };
+                console.log(obj);
+                $.post(baseUrl+'/manager/article/saveOrUpdateArticle',obj,function(res){
+                    $('#infoModal').hide();
+                    loadData(categoryid);
+                })
+
+            }else{msg = '请检查输入'}
+            $('.msg').html(msg);
+            
+        })
+        function option(){
+            $('select[name=optionDiv]').empty();
+            $.get(baseUrl+'/index/findAllCategory',{},function(res){
+                console.log(res);
+                res.data.forEach(function(item){
+                    var $option = $(`<option value='`+item.id+`'>`+item.name+`</option>`);
+                    $('#info select[name=optionDiv]').append($option);
+                });
+            });
+        };
+        $('#info select[name=optionDiv]').change(function(){
+            var optionid = $(this).val();
+            categoryid = optionid;
+            loadData(optionid);
+
+        });
+        function loadData(optionid){
+
+            // console.log(optionid);
+            $('select[name=optionDiv]').val(optionid);
+
+            $('.table tr:not(:first)').empty()
+            var obj = {
+                page:0,
+                pageSize:100,
+                categoryId:optionid
+            };
+            // console.log(obj);
+            $.get(baseUrl+"/manager/article/findArticle",obj,function(res){
+                console.log(res);
+                if(res.status==200){
+                    zhushi = '';
+                    articles = res.data.list;
+                var titlelist=res.data.list;
+                titlelist.forEach(function(item,index){
+                    var $table =$(`<tr>
+                                    <td><input type="checkbox" value="`+item.id+`"></td>
+                                    <td>`+item.title+`</td>
+                                    <td>`+item.category.name+`</td>
+                                    <td>`+item.liststyle+`</td>
+                                    <td>`+(item.content?item.content:'***')+`</td>
+                                    <td>`+item.publishtime+`</td>
+                                    <td>`+item.readtimes+`</td>
+                                    <td><i class="iconfont icon-xiugai" title="修改" style="color: blue;padding-right: 15px;cursor:pointer"></i><i class="iconfont icon-shanchu" title='删除' style="color: red;padding-right: 15px;cursor:pointer"></i></td>
+
+                            </tr>`);
+                    $('.table').append($table);
+                });
+                }
+                if(res.status==500){
+                    zhushi='请重新选择';
+                    alert(res.status+'加载失败');
+                };
+                    $('.zhushi').html(zhushi);
+
+            });
+        };
+        function parseDate(){
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth()+1;
+            month = addZero(month);
+            var day = date.getDate();
+            day = addZero(day);
+            var hour = date.getHours();
+            hour = addZero(hour);
+            var minutes = date.getMinutes();
+            minutes = addZero(minutes);
+            var seconds = date.getSeconds();
+            seconds = addZero(seconds);
+            return year+'-'+month+'-'+day+' '+hour+':'+minutes+':'+seconds;
+        }
+        function addZero(num){
+            return num<10?'0':num;
+        }
+    });
+</script>

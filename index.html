@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>看点咨询</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrapSwitch/css/bootstrap3/bootstrap-switch.min.css">
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_866856_szm027e277a.css">
+    <!-- <link rel="stylesheet" type="text/css" href="icon/iconfont.css"> -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/highcharts.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="css/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="css/bootstrapSwitch/js/bootstrap-switch.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('.leftDiv').height($(window).height());
+            $('.rightDiv').height($(window).height());
+            $('.contentRight').height($(window).height()-50-30-30);
+            $('.contentLeft li:eq(0)').trigger('click');
+        })
+    </script>
+</head>
+<body>
+    <div class="leftDiv">
+        <div class="topLeft">
+            <img src="images/logo.png" width="40" height="40" style="margin: 0 20px">看点咨询
+        </div>
+        <div class="contentLeft">
+            <ul class="list-unstyled">
+                <li><i class="iconfont icon-shouye"></i><span>首页</span><i class="iconfont icon-gengduo"></i></li>
+                <li><i class="iconfont icon-nav"></i><span>栏目管理</span><i class="iconfont icon-gengduo"></i></li>
+                <li><i class="iconfont icon-icon-test"></i><span>咨询管理</span><i class="iconfont icon-gengduo"></i></li>
+                <li><i class="iconfont icon-yonghu"></i><span>用户</span><i class="iconfont icon-gengduo"></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="rightDiv">
+        <div class="topRight">
+            <div class="noticeDiv">
+                <i class="iconfont icon-liebiao"></i>
+                <div class="notice">
+                    <i class="iconfont icon-shengyin"></i>
+                    <div class="noticeNumb">4</div>
+                </div>
+            </div>
+            <div class="infoDiv">
+                <img src="images/wm.png" width="45" height="45" style="border-radius: 50%">
+                <span>duanduanduan</span>
+                <i class="iconfont icon-gengduo"></i>
+            </div>
+        </div>
+        <div class="contentRight img-rounded"></div>
+    </div>
+</body>
+</html>
